@@ -1,0 +1,5 @@
+# SYNTAX TEST "rbs.sublime-syntax"
+# <- comment.line.rbs punctuation.definition.comment.rbs
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line.rbs
+
+# TODO

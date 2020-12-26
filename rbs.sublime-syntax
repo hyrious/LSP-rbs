@@ -1,0 +1,97 @@
+%YAML 1.2
+---
+# See http://www.sublimetext.com/docs/3/syntax.html
+# See https://github.com/ruby/rbs/blob/master/docs/syntax.md
+# Note: keep it simple, don't do much syntax checking here
+#       we only need to add colors to tokens
+file_extensions:
+  - rbs
+scope: source.rbs
+variables:
+  alpha_: '[[:alpha:]_]'
+  upper_word: '[[:upper:]][[:word:]]*'
+  lower_word: '[[:lower:]][[:word:]]*'
+
+contexts:
+  prototype:
+    - include: comments
+
+  main:
+    - include: class-like
+    - include: def-like
+    - include: literals
+    - include: keywords
+    - include: symbols
+
+  class-like: []
+
+  def-like: []
+
+  comments:
+    - match: '(#).*\n?'
+      scope: comment.line.rbs
+      captures:
+        1: punctuation.definition.comment.rbs
+
+  literals:
+    - match: '"'
+      scope: punctuation.definition.string.begin.rbs
+      push: string
+    - match: '(:){{alpha_}}+'
+      scope: constant.other.rbs
+      captures:
+        1: punctuation.definition.rbs
+    - match: '[[:digit:]]+'
+      scope: constant.numeric.integer.rbs
+    - match: \b(true|false)\b
+      scope: constant.language.rbs
+    - match: '\b_?{{upper_word}}\b'
+      scope: entity.name.constant.rbs
+
+  string:
+    - meta_scope: string.quoted.double.rbs
+    - match: \\.
+      scope: constant.character.escape.rbs
+    - match: '"'
+      scope: punctuation.definition.string.end.rbs
+      pop: true
+
+  keywords:
+    - match: \b(singleton)\b
+      scope: keyword.control.rbs
+    - match: \b(class|module|interface|extension|include|extend|public|private|alias|type|def|super|end)\b
+      scope: keyword.control.rbs
+    - match: \b(self|instance|class|bool|boolish|untyped|nil|top|bot|void)\b
+      scope: constant.other.rbs
+    - match: \b(attr_reader|attr_writer|attr_accessor)\b
+      scope: keyword.other.rbs
+    - match: \b(in|out|unchecked)
+      scope: keyword.other.rbs
+
+  symbols:
+    - match: '::'
+      scope: punctuation.accessor.double-colon.rbs
+    - match: '->'
+      scope: punctuation.separator.rbs
+    - match: '[\@\$](?={{alpha_}})'
+      scope: punctuation.definition.variable.rbs
+    - match: '[\^\(\)]'
+      scope: punctuation.definition.rbs
+    - match: '[\[\]]'
+      scope: punctuation.definition.generic.begin.rbs
+    - match: '[\{\}]'
+      scope: punctuation.section.block.rbs
+    - match: '[\|\&\?]'
+      scope: keyword.operator.rbs
+    - match: '[\:]'
+      scope: keyword.operator.rbs
+    - match: '[\,]'
+      scope: punctuation.separator.rbs
+    - match: '[\*]'
+      scope: keyword.operator.arithmetic.rbs
+    - match: '[\.]'
+      scope: punctuation.accessor.rbs
+    - match: '[\<]'
+      scope: punctuation.separator.rbs
+    - match: '[\=]'
+      scope: keyword.operator.assignment.rbs
