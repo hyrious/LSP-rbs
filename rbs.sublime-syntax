@@ -9,6 +9,7 @@ file_extensions:
 scope: source.rbs
 variables:
   alpha_: '[[:alpha:]_]'
+  word: '[[:word:]]'
   upper_word: '[[:upper:]][[:word:]]*'
   lower_word: '[[:lower:]][[:word:]]*'
 
@@ -25,7 +26,14 @@ contexts:
 
   class-like: []
 
-  def-like: []
+  def-like:
+    - match: \b(def)\s+(?:(self)(\??)(\.))?({{alpha_}}{{word}}+)
+      captures:
+        1: keyword.control.rbs
+        2: variable.language.rbs
+        3: keyword.operator.rbs
+        4: punctuation.accessor.rbs
+        5: entity.name.function.rbs
 
   comments:
     - match: '(#).*\n?'
@@ -65,7 +73,7 @@ contexts:
       scope: constant.other.rbs
     - match: \b(attr_reader|attr_writer|attr_accessor)\b
       scope: keyword.other.rbs
-    - match: \b(in|out|unchecked)
+    - match: \b(in|out|unchecked)\b
       scope: keyword.other.rbs
 
   symbols:
