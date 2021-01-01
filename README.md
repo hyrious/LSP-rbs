@@ -8,8 +8,10 @@ Requirements: `ruby` in PATH, and have installed gems [rbs][] and [typeprof][].
 
 ## Todo
 
-- [ ] sublime-syntax (partially supported)
+- [x] sublime-syntax
+  > partially supported
 - [ ] language server with the help of [typeprof][]
+  > err.. typeprof is too slow in handling this ..about 1s to analyze on windows :/
 - [ ] make the server a standalone repo
 
 ## License
